@@ -1,0 +1,269 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.3",
+        "title": "MaidWhite API 2.0"
+    },
+    "host": "www.tih.tw",
+    "schemes": [
+        "https"
+    ],
+    "consumes": [
+        "application/x-www-form-urlencoded"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "securityDefinitions": {
+        "Bearer": {
+            "description": "Access Token 被用來驗證使用者身份以及存取使用者資源，\n\nAccess Token 可以經由/2/token 這組API取得。\n\n這個欄位必須用以下格式輸入：\n\n bearer {{access_token}}\n",
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
+        }
+    },
+    "paths": {
+        "/2/register": {
+            "post": {
+                "description": "使用者註冊。\n",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "formData",
+                        "description": "使用者信箱 (大小寫無差異)。",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "password",
+                        "in": "formData",
+                        "description": "使用者密碼。",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "display",
+                        "in": "formData",
+                        "description": "預設使用的顯示名稱（如為空白字串則會抓email中「@」前面的帳號）。",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "return_uri",
+                        "in": "formData",
+                        "description": "完成認證後返回的網頁或是APP（Optional）。",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "schema": {
+                            "type": "object",
+                            "title": "Response",
+                            "properties": {}
+                        }
+                    },
+                    "400": {
+                        "description": "Error occurs",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/2/resend-verify-mail": {
+            "post": {
+                "description": "重新寄送認證信連結。多半是找不到認證信一類的狀況。\n",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "formData",
+                        "description": "使用者信箱 (大小寫無差異)。",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "schema": {
+                            "type": "object",
+                            "title": "Response",
+                            "properties": {}
+                        }
+                    },
+                    "400": {
+                        "description": "Error occurs",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/2/mail-verify": {
+            "get": {
+                "description": "取得用於認證信的認證連結。\n",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "使用者信箱 (大小寫無差異)。",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "code",
+                        "in": "query",
+                        "description": "郵件驗證碼。",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "return_uri",
+                        "in": "query",
+                        "description": "完成認證後返回的網頁或是APP。",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "schema": {
+                            "type": "object",
+                            "title": "Response",
+                            "properties": {}
+                        }
+                    },
+                    "400": {
+                        "description": "Error occurs",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/2/token": {
+            "post": {
+                "description": "使用者登入。目前使用者登入主要用途為取得access token，未來會開放以OAuth方式取得的途徑，然而目前僅支援利用帳號密碼進行取得。\n",
+                "parameters": [
+                    {
+                        "name": "grant_type",
+                        "in": "formData",
+                        "description": "請填「password」。",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "username",
+                        "in": "formData",
+                        "description": "使用者信箱 (大小寫無差異)。",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "password",
+                        "in": "formData",
+                        "description": "使用者密碼。",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "scope",
+                        "in": "formData",
+                        "description": "請填「*」。",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "schema": {
+                            "$ref": "#/definitions/Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Error occurs",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/2/devices": {
+            "post": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "description": "新增設備。\n",
+                "parameters": [
+                    {
+                        "name": "driver",
+                        "in": "formData",
+                        "description": "請填「tw.tih.x.tw.sampo.v2.air_conditioner」。",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "uid",
+                        "in": "formData",
+                        "description": "進行網路連線用的設備ID，通常貼在模組外觀上，為20或是21碼的字串。",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "schema": {
+                            "type": "object",
+                            "title": "Response",
+                            "properties": {}
+                        }
+                    },
+                    "400": {
+                        "description": "Error occurs",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Error": {
+            "type": "object",
+            "properties": {
+                "error": {
+                    "type": "string"
+                },
+                "error_description": {
+                    "type": "string"
+                }
+            }
+        },
+        "Response": {
+            "properties": {
+                "access_token": {
+                    "type": "string"
+                },
+                "token_type": {
+                    "type": "string"
+                },
+                "scope": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
