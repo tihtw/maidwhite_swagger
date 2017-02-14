@@ -1,7 +1,7 @@
 {
     "swagger": "2.0",
     "info": {
-        "version": "1.0.3",
+        "version": "1.0.4",
         "title": "MaidWhite API 2.0"
     },
     "host": "www.tih.tw",
@@ -16,7 +16,7 @@
     ],
     "securityDefinitions": {
         "Bearer": {
-            "description": "Access Token 被用來驗證使用者身份以及存取使用者資源，\n\nAccess Token 可以經由/2/token 這組API取得。\n\n這個欄位必須用以下格式輸入：\n\n bearer {{access_token}}\n",
+            "description": "Access Token 被用來驗證使用者身份以及存取使用者資源。\n\nAccess Token 可以經由/2/token 這組API取得。\n\n這個欄位必須用以下格式輸入：\n\n bearer {{access_token}}\n",
             "type": "apiKey",
             "name": "Authorization",
             "in": "header"
@@ -237,6 +237,85 @@
                         }
                     }
                 }
+            },
+            "get": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "description": "取得設備列表。",
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "schema": {
+                            "$ref": "#/definitions/DevicesList"
+                        }
+                    },
+                    "400": {
+                        "description": "Error occurs",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/2/devices/{{device_id}}": {
+            "delete": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "description": "刪除設備。",
+                "parameters": [
+                    {
+                        "name": "device_id",
+                        "in": "path",
+                        "description": "喵",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "schema": {
+                            "$ref": "#/definitions/DevicesList"
+                        }
+                    },
+                    "400": {
+                        "description": "Error occurs",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/2/devices/10": {
+            "get": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "description": "取得設備狀態。",
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "schema": {
+                            "$ref": "#/definitions/Status"
+                        }
+                    },
+                    "400": {
+                        "description": "Error occurs",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
             }
         }
     },
@@ -262,6 +341,66 @@
                 },
                 "scope": {
                     "type": "string"
+                }
+            }
+        },
+        "DevicesList": {
+            "type": "object",
+            "properties": {
+                "devices": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Devices"
+                    }
+                },
+                "status": {
+                    "type": "string"
+                }
+            }
+        },
+        "Devices": {
+            "type": "object",
+            "properties": {
+                "display_name": {
+                    "type": "string"
+                },
+                "display_picture": {
+                    "type": "string"
+                },
+                "driver_name": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "room_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "Status": {
+            "type": "object",
+            "properties": {
+                "display_name": {
+                    "type": "string"
+                },
+                "driver_name": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "power": {
+                    "type": "string"
+                },
+                "online": {
+                    "type": "string"
+                },
+                "target_temperature_range": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
                 }
             }
         }
