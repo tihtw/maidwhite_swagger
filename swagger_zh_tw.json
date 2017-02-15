@@ -273,7 +273,7 @@
                     {
                         "name": "device_id",
                         "in": "path",
-                        "description": "喵",
+                        "description": "設備的編號。",
                         "required": true,
                         "type": "string"
                     }
