@@ -284,10 +284,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Successful response",
-                        "schema": {
-                            "$ref": "#/definitions/DevicesList"
-                        }
+                        "description": "Successful response"
                     },
                     "400": {
                         "description": "Error occurs",
