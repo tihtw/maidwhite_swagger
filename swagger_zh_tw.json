@@ -227,7 +227,11 @@
                         "schema": {
                             "type": "object",
                             "title": "Response",
-                            "properties": {}
+                            "properties": {
+                                "data": {
+                                    "type": "string"
+                                }
+                            }
                         }
                     },
                     "400": {
@@ -292,9 +296,52 @@
                         }
                     }
                 }
-            }
-        },
-        "/2/devices/10": {
+            },
+            "post": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "description": "設定設備狀態。",
+                "parameters": [
+                    {
+                        "name": "device_id",
+                        "in": "path",
+                        "description": "設備的編號。",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "target_temperature_range",
+                        "in": "formData",
+                        "description": "欲設定的溫度範圍。",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "power",
+                        "in": "formData",
+                        "description": "設備的開關機狀態。",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "schema": {
+                            "$ref": "#/definitions/DevicesResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Error occurs",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
             "get": {
                 "security": [
                     {
@@ -302,6 +349,15 @@
                     }
                 ],
                 "description": "取得設備狀態。",
+                "parameters": [
+                    {
+                        "name": "device_id",
+                        "in": "path",
+                        "description": "設備的編號。",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Successful response",
@@ -401,6 +457,26 @@
                     "items": {
                         "type": "string"
                     }
+                }
+            }
+        },
+        "DevicesResponse": {
+            "type": "object",
+            "properties": {
+                "display_name": {
+                    "type": "string"
+                },
+                "driver_name": {
+                    "type": "string"
+                },
+                "error_description": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "online": {
+                    "type": "string"
                 }
             }
         }
