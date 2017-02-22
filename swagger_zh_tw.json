@@ -4,7 +4,7 @@
         "version": "1.0.4",
         "title": "MaidWhite API 2.0"
     },
-    "host": "www.tih.tw",
+    "host": "tih.kong.srm.pw",
     "schemes": [
         "https"
     ],
@@ -265,7 +265,7 @@
                 }
             }
         },
-        "/2/devices/{{device_id}}": {
+        "/2/devices/{device_id}": {
             "delete": {
                 "security": [
                     {
