@@ -1,7 +1,7 @@
 {
     "swagger": "2.0",
     "info": {
-        "version": "1.0.4",
+        "version": "1.0.5",
         "title": "MaidWhite API 2.0"
     },
     "host": "tih.kong.srm.pw",
@@ -25,6 +25,9 @@
     "paths": {
         "/2/register": {
             "post": {
+                "tags": [
+                    "user"
+                ],
                 "description": "使用者註冊。\n",
                 "parameters": [
                     {
@@ -76,6 +79,9 @@
         },
         "/2/resend-verify-mail": {
             "post": {
+                "tags": [
+                    "user"
+                ],
                 "description": "重新寄送認證信連結。多半是找不到認證信一類的狀況。\n",
                 "parameters": [
                     {
@@ -106,6 +112,9 @@
         },
         "/2/mail-verify": {
             "get": {
+                "tags": [
+                    "user"
+                ],
                 "description": "取得用於認證信的認證連結。\n",
                 "parameters": [
                     {
@@ -150,6 +159,9 @@
         },
         "/2/token": {
             "post": {
+                "tags": [
+                    "user"
+                ],
                 "description": "使用者登入。目前使用者登入主要用途為取得access token，未來會開放以OAuth方式取得的途徑，然而目前僅支援利用帳號密碼進行取得。\n",
                 "parameters": [
                     {
@@ -199,6 +211,9 @@
         },
         "/2/devices": {
             "post": {
+                "tags": [
+                    "device"
+                ],
                 "security": [
                     {
                         "Bearer": []
@@ -243,6 +258,9 @@
                 }
             },
             "get": {
+                "tags": [
+                    "device"
+                ],
                 "security": [
                     {
                         "Bearer": []
@@ -267,6 +285,9 @@
         },
         "/2/devices/{device_id}": {
             "delete": {
+                "tags": [
+                    "device"
+                ],
                 "security": [
                     {
                         "Bearer": []
@@ -295,6 +316,9 @@
                 }
             },
             "post": {
+                "tags": [
+                    "device"
+                ],
                 "security": [
                     {
                         "Bearer": []
@@ -340,6 +364,9 @@
                 }
             },
             "get": {
+                "tags": [
+                    "device"
+                ],
                 "security": [
                     {
                         "Bearer": []
