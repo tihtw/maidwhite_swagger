@@ -309,7 +309,7 @@
                         "description": "more api token",
                         "required": true,
                         "type": "string"
-                    },
+                    }
                 ],
                 "responses": {
                     "200": {
