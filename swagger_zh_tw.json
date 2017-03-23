@@ -4,7 +4,7 @@
         "version": "1.0.5",
         "title": "MaidWhite API 2.0"
     },
-    "host": "tih.kong.srm.pw",
+    "host": "www.tih.tw",
     "schemes": [
         "https"
     ],
