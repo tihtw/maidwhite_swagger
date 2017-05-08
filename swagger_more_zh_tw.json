@@ -32,7 +32,7 @@
         "parameters": [
           {
             "name": "api_key",
-            "in": "formData",
+            "in": "query",
             "description": "more api token",
             "required": true,
             "type": "string"
@@ -93,7 +93,7 @@
         "parameters": [
           {
             "name": "api_key",
-            "in": "formData",
+            "in": "query",
             "description": "more api token",
             "required": true,
             "type": "string"
@@ -187,7 +187,7 @@
         "parameters": [
           {
             "name": "api_key",
-            "in": "formData",
+            "in": "query",
             "description": "more api token",
             "required": true,
             "type": "string"
@@ -251,7 +251,7 @@
         "parameters": [
           {
             "name": "api_key",
-            "in": "formData",
+            "in": "query",
             "description": "more api token",
             "required": true,
             "type": "string"
@@ -333,7 +333,7 @@
         "parameters": [
           {
             "name": "api_key",
-            "in": "formData",
+            "in": "query",
             "description": "more api token",
             "required": true,
             "type": "string"
@@ -414,7 +414,7 @@
           },
           {
             "name": "api_key",
-            "in": "formData",
+            "in": "query",
             "description": "more api token",
             "required": true,
             "type": "string"
