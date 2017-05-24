@@ -1,0 +1,601 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.6",
+    "title": "MaidWhite API 2.0"
+  },
+  "host": "tih.kong.srm.pw",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/x-www-form-urlencoded"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "securityDefinitions": {
+    "Bearer": {
+      "description": "Access Token is used to verify the identity of user and access user resources.\n\nYou can get Access Token through API /2/token .\n\nThis format of this is as followed: \n\n bearer {{access_token}}\n",
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header"
+    }
+  },
+  "paths": {
+    "/2/register": {
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "description": "Register a new user.\n",
+        "parameters": [
+          {
+            "name": "api_key",
+            "in": "formData",
+            "description": "more api token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "email",
+            "in": "formData",
+            "description": "The user's email (not case-sensitive.)",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "password",
+            "in": "formData",
+            "description": "The user's password.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "display",
+            "in": "formData",
+            "description": "The displayed name. (If it is blank, the string before '@' in email will be used.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "return_uri",
+            "in": "formData",
+            "description": "The page or app to return to when the verication is finished. (Optional)",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "type": "object",
+              "title": "Response",
+              "properties": {}
+            }
+          },
+          "400": {
+            "description": "Error occurs",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/2/resend-verify-mail": {
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "description": "Resend the verification email link. It is usually used when the user cannot find the verification email.\n",
+        "parameters": [
+          {
+            "name": "api_key",
+            "in": "formData",
+            "description": "more api token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "email",
+            "in": "formData",
+            "description": "The user's email (not case-sensitive.)",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "type": "object",
+              "title": "Response",
+              "properties": {}
+            }
+          },
+          "400": {
+            "description": "Error occurs",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/2/mail-verify": {
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "description": "Get the verification link which is in the verication email.\n",
+        "parameters": [
+          {
+            "name": "api_key",
+            "in": "query",
+            "description": "more api token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "email",
+            "in": "query",
+            "description": "The user's email (not case-sensitive.)",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "code",
+            "in": "query",
+            "description": "The verification code in email.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "return_uri",
+            "in": "query",
+            "description": "The page or app to return to when the verication is finished.",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "type": "object",
+              "title": "Response",
+              "properties": {}
+            }
+          },
+          "400": {
+            "description": "Error occurs",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/2/token": {
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "description": "User sign in. Currently, the main purpose of signing in is to get access token. To get access token through OAuth will be released in the future, getting through username and password is the only possible way now.\n",
+        "parameters": [
+          {
+            "name": "api_key",
+            "in": "formData",
+            "description": "more api token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "grant_type",
+            "in": "formData",
+            "description": "Please fill in 'password'.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "username",
+            "in": "formData",
+            "description": "The user's email (not case-sensitive.)",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "password",
+            "in": "formData",
+            "description": "The user's password.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "scope",
+            "in": "formData",
+            "description": "Please fill in '*'.",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "$ref": "#/definitions/Response"
+            }
+          },
+          "400": {
+            "description": "Error occurs",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/2/devices": {
+      "post": {
+        "tags": [
+          "device"
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "description": "Add an device. Required parameters other than 'api_key' and 'driver_name': \n聲寶變頻冷暖氣機、ARKDAN空氣清淨機：「uid」；聲寶智慧管家：「mac_address, password」；聲寶智慧管家相關設備：「mac_address, password, network_address」。",
+        "parameters": [
+          {
+            "name": "api_key",
+            "in": "formData",
+            "description": "more api token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "driver",
+            "in": "formData",
+            "description": "已棄置。請使用driver_name。",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "driver_name",
+            "in": "formData",
+            "description": "設備驅動名稱。聲寶變頻冷暖氣機：「tw.tih.x.tw.sampo.v2.air_conditioner」、ARKDAN空氣清淨機：「tw.tih.x.tw.sampo.arkdan」、聲寶智慧管家：「tw.tih.x.tw.sampo.homegateway.gateway」。以下皆為聲寶智慧管家相關設備：磁簧開關：「tw.tih.x.tw.sampo.homegateway.magneticsensor」、智慧插座：「tw.tih.x.tw.sampo.homegateway.smartplug」、人體感測器：「tw.tih.x.tw.sampo.homegateway.motionsensor」、空氣品質感測器：「tw.tih.x.tw.sampo.homegateway.indoorairqualitysensor」、溫濕度感測器：「tw.tih.x.tw.sampo.homegateway.temperaturesensor」、電燈：「tw.tih.x.tw.sampo.homegateway.colourtemperaturelight」。",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "uid",
+            "in": "formData",
+            "description": "進行網路連線用的設備ID，通常貼在模組外觀上，為20或是21碼的字串。",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "mac_address",
+            "in": "formData",
+            "description": "Gateway的mac address，貼在設備底部。",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "password",
+            "in": "formData",
+            "description": "設備連線密碼，第一次連線免填。",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "network_address",
+            "in": "formData",
+            "description": "Zigbee連線的NetAddr，可藉由智慧管家的列表API取得。",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "type": "object",
+              "title": "Response",
+              "properties": {
+                "data": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error occurs",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "device"
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "description": "取得設備列表。",
+        "parameters": [
+          {
+            "name": "api_key",
+            "in": "formData",
+            "description": "more api token",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "$ref": "#/definitions/DevicesList"
+            }
+          },
+          "400": {
+            "description": "Error occurs",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/2/devices/{device_id}": {
+      "delete": {
+        "tags": [
+          "device"
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "description": "刪除設備。",
+        "parameters": [
+          {
+            "name": "api_key",
+            "in": "query",
+            "description": "more api token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "device_id",
+            "in": "path",
+            "description": "設備的編號。",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Error occurs",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "device"
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "description": "Set the device's status.",
+        "parameters": [
+          {
+            "name": "device_id",
+            "in": "path",
+            "description": "The device's id.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "api_key",
+            "in": "formData",
+            "description": "more api token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "target_temperature_range",
+            "in": "formData",
+            "description": "The temperatur range you wannt to set.",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "power",
+            "in": "formData",
+            "description": "Set the device on or off.",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "$ref": "#/definitions/DevicesResponse"
+            }
+          },
+          "400": {
+            "description": "Error occurs",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "device"
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "description": "Get the device's status.",
+        "parameters": [
+          {
+            "name": "api_key",
+            "in": "query",
+            "description": "more api token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "device_id",
+            "in": "path",
+            "description": "The device's id.",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "$ref": "#/definitions/Status"
+            }
+          },
+          "400": {
+            "description": "Error occurs",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Error": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string"
+        },
+        "error_description": {
+          "type": "string"
+        }
+      }
+    },
+    "Response": {
+      "properties": {
+        "access_token": {
+          "type": "string"
+        },
+        "token_type": {
+          "type": "string"
+        },
+        "scope": {
+          "type": "string"
+        }
+      }
+    },
+    "DevicesList": {
+      "type": "object",
+      "properties": {
+        "devices": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Devices"
+          }
+        },
+        "status": {
+          "type": "string"
+        }
+      }
+    },
+    "Devices": {
+      "type": "object",
+      "properties": {
+        "display_name": {
+          "type": "string"
+        },
+        "display_picture": {
+          "type": "string"
+        },
+        "driver_name": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "room_id": {
+          "type": "string"
+        }
+      }
+    },
+    "Status": {
+      "type": "object",
+      "properties": {
+        "display_name": {
+          "type": "string"
+        },
+        "driver_name": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "power": {
+          "type": "string"
+        },
+        "online": {
+          "type": "string"
+        },
+        "target_temperature_range": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "DevicesResponse": {
+      "type": "object",
+      "properties": {
+        "display_name": {
+          "type": "string"
+        },
+        "driver_name": {
+          "type": "string"
+        },
+        "error_description": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "online": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
