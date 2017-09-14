@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "1.0.6",
+    "version": "1.0.7",
     "title": "MaidWhite API 2.0"
   },
   "host": "tih.kong.srm.pw",
@@ -247,7 +247,7 @@
             "Bearer": []
           }
         ],
-        "description": "新增設備。除api_key、driver_name外，各設備必需參數：聲寶變頻冷暖氣機、ARKDAN空氣清淨機：「uid」；聲寶智慧管家：「mac_address, password」；聲寶智慧管家相關設備：「mac_address, password, network_address」。",
+        "description": "新增設備。除api_key、driver_name外，各設備必需參數：聲寶變頻冷暖氣機、ARKDAN空氣清淨機：「uid」；聲寶智慧管家：「mac_address, password」；聲寶智慧管家相關設備：「mac_address, password, network_address」；東元相關設備：「device_id」；FamilyAsyst相關設備、Opure A8、彬騰電動直立捲簾：「action, phone, password, session_id, device_id」。",
         "parameters": [
           {
             "name": "api_key",
@@ -266,35 +266,63 @@
           {
             "name": "driver_name",
             "in": "formData",
-            "description": "設備驅動名稱。聲寶變頻冷暖氣機：「tw.tih.x.tw.sampo.v2.air_conditioner」、ARKDAN空氣清淨機：「tw.tih.x.tw.sampo.arkdan」、聲寶智慧管家：「tw.tih.x.tw.sampo.homegateway.gateway」。以下皆為聲寶智慧管家相關設備：磁簧開關：「tw.tih.x.tw.sampo.homegateway.magneticsensor」、智慧插座：「tw.tih.x.tw.sampo.homegateway.smartplug」、人體感測器：「tw.tih.x.tw.sampo.homegateway.motionsensor」、空氣品質感測器：「tw.tih.x.tw.sampo.homegateway.indoorairqualitysensor」、溫濕度感測器：「tw.tih.x.tw.sampo.homegateway.temperaturesensor」、電燈：「tw.tih.x.tw.sampo.homegateway.colourtemperaturelight」。",
+            "description": "設備驅動名稱。聲寶變頻冷暖氣機：「tw.tih.x.tw.sampo.v2.air_conditioner」、ARKDAN空氣清淨機：「tw.tih.x.tw.sampo.arkdan」、聲寶智慧管家：「tw.tih.x.tw.sampo.homegateway.gateway」。以下皆為聲寶智慧管家相關設備：磁簧開關：「tw.tih.x.tw.sampo.homegateway.magneticsensor」、智慧插座：「tw.tih.x.tw.sampo.homegateway.smartplug」、人體感測器：「tw.tih.x.tw.sampo.homegateway.motionsensor」、空氣品質感測器：「tw.tih.x.tw.sampo.homegateway.indoorairqualitysensor」、溫濕度感測器：「tw.tih.x.tw.sampo.homegateway.temperaturesensor」、電燈：「tw.tih.x.tw.sampo.homegateway.colourtemperaturelight」。以下皆為東元相關設備：變頻冷暖氣機：「tw.tih.x.tw.teco.lora.airconditioner」、排風機：「tw.tih.x.tw.teco.lora.ventilator」、空氣盒子：「tw.tih.x.tw.teco.lora.airbox」。以下為FamilyAsyst相關設備：智慧插座：「tw.tih.x.tw.tisc.familyasyst.smartplug」、智慧延長線：「tw.tih.x.tw.tisc.familyasyst.smartstrip」、捲門衛士：「tw.tih.x.tw.tisc.familyasyst.smartrollingdoor」。Opure A8：「tw.tih.x.tw.tisc.opure.aircleaner」。彬騰電動直立捲簾：「tw.tih.x.tw.bintronic.window.blind」。",
             "required": true,
+            "type": "string"
+          },
+          {
+            "name": "action",
+            "in": "formData",
+            "description": "設備註冊動作，適用於某些需要多步驟註冊的帳號。FamilyAsyst相關設備、Opure A8、彬騰電動直立捲簾：新增裝置的步驟，分為「get_smscode, get_usertoken, get_devicelist, add_device」。",
+            "required": false,
             "type": "string"
           },
           {
             "name": "uid",
             "in": "formData",
-            "description": "進行網路連線用的設備ID，通常貼在模組外觀上，為20或是21碼的字串。",
+            "description": "聲寶變頻冷暖氣機、ARKDAN空氣清淨機：進行網路連線用的設備ID，通常貼在模組外觀上，為20或是21碼的字串。",
             "required": false,
             "type": "string"
           },
           {
             "name": "mac_address",
             "in": "formData",
-            "description": "Gateway的mac address，貼在設備底部。",
+            "description": "聲寶智慧管家及相關設備：Gateway的mac address，貼在設備底部。",
             "required": false,
             "type": "string"
           },
           {
             "name": "password",
             "in": "formData",
-            "description": "設備連線密碼，第一次連線免填。",
+            "description": "聲寶智慧管家及相關設備、FamilyAsyst相關設備、Opure A8、彬騰電動直立捲簾：設備連線密碼，第一次連線免填。",
             "required": false,
             "type": "string"
           },
           {
             "name": "network_address",
             "in": "formData",
-            "description": "Zigbee連線的NetAddr，可藉由智慧管家的列表API取得。",
+            "description": "聲寶智慧管家相關設備：Zigbee連線的NetAddr，可藉由智慧管家的列表API取得。",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "device_id",
+            "in": "formData",
+            "description": "東元相關設備：進行網路連線用的設備ID。FamilyAsyst相關設備、Opure A8、彬騰電動直立捲簾：TISC Open API的device id。",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "phone",
+            "in": "formData",
+            "description": "FamilyAsyst相關設備、Opure A8、彬騰電動直立捲簾：使用者的電話，範例格式： 「886912123456」。",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "session_id",
+            "in": "formData",
+            "description": "FamilyAsyst相關設備、Opure A8、彬騰電動直立捲簾：進行設備連線用的ID。",
             "required": false,
             "type": "string"
           }
